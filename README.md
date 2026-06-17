@@ -11,7 +11,7 @@ This project answers that question by combining tree biology, live weather data,
 ## The problem
 
 Climate adaptation in cities increasingly depends on urban trees for cooling. Trees are effective natual coolers.
-[see one of many LinkedIn posts on this] (https://www.linkedin.com/posts/timschumacher_on-this-very-hot-day-a-small-reminder-on-activity-7464632411142746113-bS7q/?utm_source=share&utm_medium=member_desktop&rcm=ACoAACQ0CcABNgihAWULriPVgpQEQYq9GKkJhgI)
+[see one of many LinkedIn posts on this](https://www.linkedin.com/posts/timschumacher_on-this-very-hot-day-a-small-reminder-on-activity-7464632411142746113-bS7q/?utm_source=share&utm_medium=member_desktop&rcm=ACoAACQ0CcABNgihAWULriPVgpQEQYq9GKkJhgI)
 But irrigation resources are limited, and not all trees are equal:
 
 - Some species transpire (and therefore cool) more efficiently than others, relative to how much water they consume.
