@@ -18,7 +18,14 @@ But irrigation resources are limited, and not all trees are equal:
 - Heat is not evenly distributed across a city - some streets run significantly hotter than others (urban heat island effect).
 - Rain reduces irrigation need, but only some of it actually reaches the roots.
 
-This dashboard turns Frankfurt's open tree registry into a decision-support tool: for any tree, on any day, how much water does it need, and how much cooling value does that water buy?
+The dashboard below turns Frankfurt's open tree registry into a decision-support tool: for any tree, on any day, how much water does it need, and how much cooling value does that water buy?
+
+---
+
+## Demo
+
+<img width="800" height="520" alt="ScreenRecording2026-06-17at15 32 02-ezgif com-video-to-gif-converter" src="https://github.com/user-attachments/assets/cd819cf0-327c-4c78-a427-2eec89741d10" />
+
 
 ---
 
@@ -97,11 +104,7 @@ Water (Kc) and shade coefficients are anchored to [WUCOLS](https://wucols.ucdavi
 
 ---
 
-## Demo
 
-> *[GIF/video of map interaction to be inserted here]*
-
----
 
 ## Tech stack
 
