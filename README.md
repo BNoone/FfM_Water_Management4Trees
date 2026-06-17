@@ -1,8 +1,8 @@
-# 🌳 Life of a Tree — Frankfurt Water Management Dashboard
+# 🌳 Frankfurt: Tree Water Management Dashboard
 
 **Frankfurt has 161,000 street trees. On a hot June day, a city gardener has limited water. Which trees do you water first?**
 
-This project answers that question by combining tree biology, live weather data, and urban heat island science into a single priority score — visualised on an interactive map.
+This project answers that question by combining tree biology, live weather data, and urban heat island science into a single priority score - visualised on an interactive map.
 
 🔗 **Live app:** [frankfurt-tree-watch.lovable.app](https://frankfurt-tree-watch.lovable.app)
 
@@ -10,7 +10,9 @@ This project answers that question by combining tree biology, live weather data,
 
 ## The problem
 
-Climate adaptation in cities increasingly depends on urban trees for cooling. But irrigation resources are limited, and not all trees are equal:
+Climate adaptation in cities increasingly depends on urban trees for cooling. Trees are effective natual coolers.
+[see one of many LinkedIn posts on this] (https://www.linkedin.com/posts/timschumacher_on-this-very-hot-day-a-small-reminder-on-activity-7464632411142746113-bS7q/?utm_source=share&utm_medium=member_desktop&rcm=ACoAACQ0CcABNgihAWULriPVgpQEQYq9GKkJhgI)
+But irrigation resources are limited, and not all trees are equal:
 
 - Some species transpire (and therefore cool) more efficiently than others, relative to how much water they consume.
 - Heat is not evenly distributed across a city — some streets run significantly hotter than others (urban heat island effect).
