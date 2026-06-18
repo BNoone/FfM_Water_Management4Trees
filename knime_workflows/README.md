@@ -27,7 +27,7 @@ Built as part of the **Life of a Tree** portfolio, an urban tree water managemen
 **Dataset:** DWD HOSTRADA, High-Resolution Hourly Raster Dataset, urban heat island intensity
 **Source:** [opendata.dwd.de — climate_environment/CDC/grids_germany/hourly/hostrada/urban_heat_island_intensity](https://opendata.dwd.de/climate_environment/CDC/grids_germany/hourly/hostrada/urban_heat_island_intensity/)
 **Format:** NetCDF (.nc), 1 km × 1 km grid, EPSG:3034 projection, UTC timestamps
-**Coverage used:** April 2026 (one monthly file, 720 hourly timesteps)
+**Coverage used:** May 2026 (one monthly file, 744 hourly timesteps)
 
 The UHI intensity values are derived from the HOSTRADA dataset using Copernicus CORINE Land Cover 2018 as the urban land cover input.
 
@@ -59,7 +59,7 @@ Python Source (legacy)  ─►  CSV Writer
 | `lon` | Longitude of grid cell centroid (WGS84) |
 | `uhi` | Monthly mean UHI intensity in Kelvin (delta vs. surrounding rural baseline) |
 
-This CSV feeds directly into the Life of a Tree Lovable app as the UHI overlay layer, allowing district-level heat stress to be cross-referenced against tree cooling capacity.
+This CSV feeds directly into the Life of a Tree Lovable app as the UHI overlay layer, and is also joined against the Frankfurt tree dataset (via a second KNIME workflow) to produce `trees_enriched.csv` — the file that powers the app's cooling efficiency and watering priority scores.
 
 ## Reproducing locally
 
