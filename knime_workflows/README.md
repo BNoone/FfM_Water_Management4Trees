@@ -33,6 +33,7 @@ The UHI intensity values are derived from the HOSTRADA dataset using Copernicus 
 
 ## Workflow
 
+```
 Python Source (legacy)  ─►  CSV Writer
         │
         └── xarray reads .nc file
@@ -40,11 +41,8 @@ Python Source (legacy)  ─►  CSV Writer
             → filter to Frankfurt bbox (lat 50.02 to 50.23, lon 8.47 to 8.83)
             → groupby (lat, lon) → mean UHI intensity
             → output ~575 grid cells × 1 mean value
-
-
+```
 <img width="1255" height="425" alt="image" src="https://github.com/user-attachments/assets/a39b066d-4e45-4f5e-aec9-07387a590d4d" />
-
-
 
 **Nodes:**
 `Python Source (legacy)` reads the NetCDF via `xarray`, applies spatial filter and monthly aggregation.
