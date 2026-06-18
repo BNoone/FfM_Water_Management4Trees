@@ -49,7 +49,7 @@ The dashboard below turns Frankfurt's open tree registry into a decision-support
 |---|---|---|
 | Tree source data | Frankfurt Baumkataster (open data) | ~161k trees: species, crown diameter, height, planting year, location |
 | Weather automation | Make.com + Open-Meteo | Daily scenario fetches tomorrow's forecast for Frankfurt, appends to Google Sheets |
-| Heat island data | DWD HOSTRADA (May 2026, hottest month on record) | Hourly NetCDF raster, aggregated to ~575 grid cells (~1km² each) |
+| Heat island data | DWD HOSTRADA (May 2026, second hottest May month on record) | Hourly NetCDF raster, aggregated to ~575 grid cells (~1km² each) |
 | Data enrichment | KNIME Analytics Platform | Coordinate conversion, spatial join (trees ↔ UHI grid), species lookup, formula calculations |
 | Frontend | Lovable (React + Leaflet) | Map, clustering, weather card, water needs panel, area selection, heat overlay |
 
@@ -62,16 +62,15 @@ The workflow reads the raw tree CSV and the processed UHI grid, rounds coordinat
 Full technical breakdown: [`knime_workflows/README.md`](knime_workflows/README.md)
 
 ---
-
+ 
 ## The formulas
-
-**Cooling Efficiency** (structural, weather-independent):
-```
-Cooling Efficiency = (Tree Height × Shade Factor) ÷ (Crown Diameter × Species Water Factor)
-```
-A unitless score — height and crown diameter cancel their units. Capped at 5.0, with guards for zero/missing crown or height.
-
-**Irrigation Need** (daily, weather-dependent):
+ 
+A note on sourcing first: the **irrigation/water-use approach** below follows an established crop-coefficient methodology. The **cooling efficiency scoring model** is a custom formula I worked on for this project - structurally sensible and inspired by crop coefficient principles, but not itself a published equation. Both are clearly separated below.
+ 
+### Irrigation need (based on established crop coefficient methodology)
+ 
+The structure - water need as crown area × evapotranspiration factor × a species-specific crop coefficient - follows the method used by [UC Agriculture & Natural Resources](https://ucanr.edu/) for landscape irrigation, itself grounded in [FAO-56](https://www.fao.org/4/x0490e/x0490e0b.htm), the standard reference for crop coefficients in irrigation science:
+ 
 ```
 Crown Area = π × (Crown Diameter ÷ 2)²
 Base Water Need = Crown Area × 3.5 × Species Water Factor (Kc)
@@ -80,26 +79,36 @@ Total Water Consumed = Base Water Need × (1 + Heat Adjustment) × (1 − Humidi
 Rain Offset = Precipitation (mm) × Crown Area
 Irrigation Needed = max(0, Total Water Consumed − Rain Offset)
 ```
+ 
+The base multiplier (3.5 L/m²) and the heat/humidity adjustment terms are simplified approximations of evapotranspiration behaviour, not cited equations — built to be directionally correct (hotter and drier → more water) rather than scientifically precise.
 
+ 
 **Cooling Output:**
 ```
 Cooling Output (kWh) = Total Water Consumed (L) × 0.7
 ```
-*(1 litre of transpired water ≈ 0.7 kWh of cooling — based on the latent heat of vaporisation.)*
-
-**Cooling Priority** (the key decision metric):
+1 litre of transpired water ≈ 0.7 kWh of cooling — this conversion is the latent heat of vaporisation of water, a physical constant rather than an estimate.
+ 
+### Cooling Efficiency (custom model, structural and weather-independent)
+ 
+```
+Cooling Efficiency = (Tree Height × Shade Factor) ÷ (Crown Diameter × Species Water Factor)
+```
+ 
+This is a scoring model I developed for this project — not a published formula. It's designed so that height and crown diameter cancel their units (a unitless score), modulated by species. Capped at 5.0, with guards for zero/missing crown or height. The intent: reward trees that deliver more structural cooling per unit of water demanded.
+ 
+### Cooling Priority (the key decision metric)
+ 
 ```
 Cooling Priority = Cooling Efficiency × Local UHI Intensity
 ```
-High value = an efficient cooler sitting in an already-hot zone → top watering priority.
-
+High value = an efficient cooler sitting in an already-hot zone → top watering priority. This combination is the project's core contribution: linking a tree-level efficiency score to neighbourhood-level heat data.
+ 
 ### Species factors
-
-Water (Kc) and shade coefficients are anchored to [WUCOLS](https://wucols.ucdavis.edu/) water-use bands and the [FAO-56](https://www.fao.org/4/x0490e/x0490e0b.htm) crop coefficient methodology, adapted for 10 common Frankfurt street tree genera (Platanus, Tilia, Acer, Robinia, Carpinus, Quercus, Fraxinus, Aesculus, Prunus, Fagus). Shade factors are directional estimates based on canopy density, not measured values.
-
+ 
+Water-use (Kc) coefficients are anchored to [WUCOLS](https://wucols.ucdavis.edu/) water-use bands for 10 common Frankfurt street tree genera (Platanus, Tilia, Acer, Robinia, Carpinus, Quercus, Fraxinus, Aesculus, Prunus, Fagus). **Shade factors are my own directional estimates** based on general canopy density reasoning for each genus — not measured leaf area index (LAI) data, and should be read as illustrative rather than precise.
+ 
 ---
-
-
 
 ## Tech stack
 
@@ -107,19 +116,18 @@ Water (Kc) and shade coefficients are anchored to [WUCOLS](https://wucols.ucdavi
 - **Automation:** Make.com (daily weather fetch via Open-Meteo)
 - **ETL / enrichment:** KNIME Analytics Platform
 - **Frontend:** Lovable (React, Leaflet, marker clustering, Leaflet.draw)
-- **Heat island source:** DWD HOSTRADA via Python (xarray, netCDF4, pandas)
+- **Heat island source:** KNIME processing of DWD HOSTRADA NetCDF, parsed via a Python
 
 ---
-
+ 
 ## Known limitations
-
+ 
 - ~32k of 161k trees (≈20%) fall outside the UHI grid coverage and are excluded from the enriched dataset.
-- Shade factors are directional estimates, not measured canopy density values — labelled as such.
-- UHI intensity reflects May 2026 conditions (a record-hot month) and is static; it does not update daily.
+- Shade factors are directional estimates, not measured canopy density values - labelled as such.
+- UHI intensity reflects May 2026 conditions (a second record-hot month) and is static; it does not update daily.
 - One data outlier (a tree with near-zero crown diameter) is capped rather than removed; negligible effect on the 1.52 efficiency threshold, which is based on the dataset median.
-
 ---
-
+ 
 ## Author
-
-Built as a hands-on portfolio project to demonstrate end-to-end data pipeline design — from open data ingestion through ETL, automation, and interactive visualisation — applied to a real urban climate adaptation question.
+ 
+Built as a hands-on portfolio project to demonstrate end-to-end data pipeline design - from open data ingestion through ETL, automation, and interactive visualisation - applied to a real urban climate adaptation question.
