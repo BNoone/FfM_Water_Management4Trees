@@ -38,7 +38,7 @@ The dashboard below turns Frankfurt's open tree registry into a decision-support
 
 ## Architecture
 
-<img width="9414" height="5204" alt="Untitled" src="https://github.com/user-attachments/assets/b21bb3ef-fdcd-47f1-affc-93e3249de276" />
+<img width="9414" height="5204" alt="Untitled (2)" src="https://github.com/user-attachments/assets/90e54ed6-2e9f-41a6-8ca6-6052ce320239" />
 
 
 ---
