@@ -69,13 +69,13 @@ A note on sourcing first: the **irrigation/water-use approach** below follows an
  
 ### Irrigation need (based on established crop coefficient methodology)
  
-The structure - water need as crown area × evapotranspiration factor × a species-specific crop coefficient - follows the method used by [UC Agriculture & Natural Resources](https://ucanr.edu/) for landscape irrigation, itself grounded in [FAO-56](https://www.fao.org/4/x0490e/x0490e0b.htm), the standard reference for crop coefficients in irrigation science:
+The structure, water need as crown area × evapotranspiration factor × a species-specific crop coefficien, follows the method used by [UC Agriculture & Natural Resources](https://ucanr.edu/) for landscape irrigation, itself grounded in [FAO-56](https://www.fao.org/4/x0490e/x0490e0b.htm), the standard reference for crop coefficients in irrigation science:
  
 ```
 Crown Area = π × (Crown Diameter ÷ 2)²
 Base Water Need = Crown Area × 3.5 × Species Water Factor (Kc)
 Heat Adjustment = max(0, (Max Temp °C − 15) ÷ 10)
-Total Water Consumed = Base Water Need × (1 + Heat Adjustment) × (1 − Humidity % ÷ 200)
+Total Water Consumed = Base Water Need × (1 + Heat Adjustment) × (1 - Humidity % ÷ 200)
 Rain Offset = Precipitation (mm) × Crown Area
 Irrigation Needed = max(0, Total Water Consumed − Rain Offset)
 ```
@@ -87,7 +87,7 @@ The base multiplier (3.5 L/m²) and the heat/humidity adjustment terms are simpl
 ```
 Cooling Output (kWh) = Total Water Consumed (L) × 0.7
 ```
-1 litre of transpired water ≈ 0.7 kWh of cooling — this conversion is the latent heat of vaporisation of water, a physical constant rather than an estimate.
+1 litre of transpired water ≈ 0.7 kWh of cooling - this conversion is the latent heat of vaporisation of water, a physical constant rather than an estimate.
  
 ### Cooling Efficiency (custom model, structural and weather-independent)
  
@@ -95,7 +95,9 @@ Cooling Output (kWh) = Total Water Consumed (L) × 0.7
 Cooling Efficiency = (Tree Height × Shade Factor) ÷ (Crown Diameter × Species Water Factor)
 ```
  
-This is a scoring model I developed for this project — not a published formula. It's designed so that height and crown diameter cancel their units (a unitless score), modulated by species. Capped at 5.0, with guards for zero/missing crown or height. The intent: reward trees that deliver more structural cooling per unit of water demanded.
+This is a scoring model I developed for this project - not a published formula. It's designed so that height and crown diameter cancel their units (a unitless score), modulated by species. Capped at 5.0, with guards for zero/missing crown or height. The intent: reward trees that deliver more structural cooling per unit of water demanded.
+
+Because efficiency depends on each tree's actual measured height and crown diameter, and not just a species average, two trees of the same species on the same street can still receive different priority scores. This is intentional: it reflects real variation in individual tree condition rather than treating all trees of a genus as identical.
  
 ### Cooling Priority (the key decision metric)
  
@@ -128,6 +130,6 @@ Water-use (Kc) coefficients are anchored to [WUCOLS](https://wucols.ucdavis.edu/
 - One data outlier (a tree with near-zero crown diameter) is capped rather than removed; negligible effect on the 1.52 efficiency threshold, which is based on the dataset median.
 ---
  
-## Author
+## Wrap-Up
  
 Built a hands-on dashboard to demonstrate end-to-end data pipeline design: from open data ingestion through ETL, automation, and interactive visualisation. Goal: application of data to a real urban climate adaptation question.
