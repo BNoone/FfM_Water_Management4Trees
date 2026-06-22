@@ -130,4 +130,4 @@ Water-use (Kc) coefficients are anchored to [WUCOLS](https://wucols.ucdavis.edu/
  
 ## Author
  
-Built as a hands-on portfolio project to demonstrate end-to-end data pipeline design - from open data ingestion through ETL, automation, and interactive visualisation - applied to a real urban climate adaptation question.
+Built a hands-on dashboard to demonstrate end-to-end data pipeline design: from open data ingestion through ETL, automation, and interactive visualisation. Goal: application of data to a real urban climate adaptation question.
